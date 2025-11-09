@@ -38,7 +38,7 @@ fn main() {
 
     if args.execute {
         let (output, report) = client.execute(FIBONACCI_ELF, &stdin).run().unwrap();
-        println!("Program executed successfully on Monero-Chan Runtime.");
+        println!("Program executed successfully on monerochan.rs Runtime.");
 
         let decoded = PublicValuesStruct::abi_decode(output.as_slice()).unwrap();
         let PublicValuesStruct { n, a, b } = decoded;
@@ -51,18 +51,18 @@ fn main() {
         assert_eq!(b, expected_b);
         println!("Values are correct!");
 
-        println!("Number of Monero-Chan Runtime cycles: {}", report.total_instruction_count());
+        println!("Number of monerochan.rs Runtime cycles: {}", report.total_instruction_count());
     } else {
         let (pk, vk) = client.setup(FIBONACCI_ELF);
 
         let proof = client
             .prove(&pk, &stdin)
             .run()
-            .expect("failed to generate private proof with Monero-Chan Runtime");
+            .expect("failed to generate private proof with monerochan.rs Runtime");
 
-        println!("Successfully generated private proof with Monero-Chan Runtime!");
+        println!("Successfully generated private proof with monerochan.rs Runtime!");
 
-        client.verify(&proof, &vk).expect("failed to verify private proof with Monero-Chan Runtime");
-        println!("Successfully verified private proof with Monero-Chan Runtime!");
+        client.verify(&proof, &vk).expect("failed to verify private proof with monerochan.rs Runtime");
+        println!("Successfully verified private proof with monerochan.rs Runtime!");
     }
 }

@@ -1,6 +1,6 @@
-# Monero-Chan Project Template
+# monerochan.rs Project Template
 
-This is a template for creating an end-to-end [monerochan.rs](https://github.com/Monero-Chan-Foundation/monerochan-rs) project that can generate a proof of any RISC-V program using the Monero-Chan RISC-V Runtime.
+This is a template for creating an end-to-end [monerochan.rs](https://github.com/Monero-Chan-Foundation/monerochan-rs) project that can generate a proof of any RISC-V program using the monerochan.rs Runtime.
 
 ## Requirements
 
