@@ -1,0 +1,68 @@
+use alloy_sol_types::SolType;
+use clap::Parser;
+use fibonacci_lib::PublicValuesStruct;
+use monerochan::{include_elf, ProverClient, MONEROCHANStdin};
+
+pub const FIBONACCI_ELF: &[u8] = include_elf!("fibonacci-program");
+
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+struct Args {
+    #[arg(long)]
+    execute: bool,
+
+    #[arg(long)]
+    prove: bool,
+
+    #[arg(long, default_value = "20")]
+    n: u32,
+}
+
+fn main() {
+    monerochan::utils::setup_logger();
+    dotenv::dotenv().ok();
+
+    let args = Args::parse();
+
+    if args.execute == args.prove {
+        eprintln!("Error: You must specify either --execute or --prove");
+        std::process::exit(1);
+    }
+
+    let client = ProverClient::from_env();
+
+    let mut stdin = MONEROCHANStdin::new();
+    stdin.write(&args.n);
+
+    println!("n: {}", args.n);
+
+    if args.execute {
+        let (output, report) = client.execute(FIBONACCI_ELF, &stdin).run().unwrap();
+        println!("Program executed successfully on Monero-Chan Runtime.");
+
+        let decoded = PublicValuesStruct::abi_decode(output.as_slice()).unwrap();
+        let PublicValuesStruct { n, a, b } = decoded;
+        println!("n: {}", n);
+        println!("a: {}", a);
+        println!("b: {}", b);
+
+        let (expected_a, expected_b) = fibonacci_lib::fibonacci(n);
+        assert_eq!(a, expected_a);
+        assert_eq!(b, expected_b);
+        println!("Values are correct!");
+
+        println!("Number of Monero-Chan Runtime cycles: {}", report.total_instruction_count());
+    } else {
+        let (pk, vk) = client.setup(FIBONACCI_ELF);
+
+        let proof = client
+            .prove(&pk, &stdin)
+            .run()
+            .expect("failed to generate private proof with Monero-Chan Runtime");
+
+        println!("Successfully generated private proof with Monero-Chan Runtime!");
+
+        client.verify(&proof, &vk).expect("failed to verify private proof with Monero-Chan Runtime");
+        println!("Successfully verified private proof with Monero-Chan Runtime!");
+    }
+}
