@@ -1380,6 +1380,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "bs58"
+version = "0.5.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bf88ba1141d185c399bee5288d850d63b8369520c1eafc32a0430b5b6c287bf4"
+dependencies = [
+ "tinyvec",
+]
+
+[[package]]
 name = "bumpalo"
 version = "3.17.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1781,6 +1790,33 @@ dependencies = [
 ]
 
 [[package]]
+name = "curve25519-dalek"
+version = "4.1.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "97fb8b7c4503de7d6ae7b42ab72a5a59857b4c937ec27a3d4539dba95b5ab2be"
+dependencies = [
+ "cfg-if",
+ "cpufeatures",
+ "curve25519-dalek-derive",
+ "digest 0.10.7",
+ "fiat-crypto",
+ "rustc_version 0.4.1",
+ "subtle",
+ "zeroize",
+]
+
+[[package]]
+name = "curve25519-dalek-derive"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f46882e17999c6cc590af592290432be3bce0428cb0d5f8b6715e4dc7b383eb3"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.100",
+]
+
+[[package]]
 name = "darling"
 version = "0.21.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2073,6 +2109,30 @@ dependencies = [
 ]
 
 [[package]]
+name = "ed25519"
+version = "2.2.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "115531babc129696a58c64a4fef0a8bf9e9698629fb97e9e40767d235cfbcd53"
+dependencies = [
+ "pkcs8",
+ "signature",
+]
+
+[[package]]
+name = "ed25519-dalek"
+version = "2.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "70e796c081cee67dc755e1a36a0a172b897fab85fc3f6bc48307991f64e4eca9"
+dependencies = [
+ "curve25519-dalek",
+ "ed25519",
+ "serde",
+ "sha2",
+ "subtle",
+ "zeroize",
+]
+
+[[package]]
 name = "either"
 version = "1.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2240,6 +2300,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "fiat-crypto"
+version = "0.2.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "28dea519a9695b9977216879a3ebfddf92f1c08c05d984f8996aecd6ecdc811d"
+
+[[package]]
 name = "fibonacci-lib"
 version = "0.1.0"
 dependencies = [
@@ -2288,6 +2354,12 @@ dependencies = [
  "rustc-hex",
  "static_assertions",
 ]
+
+[[package]]
+name = "fixedbitset"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0ce7134b9999ecaf8bcd65542e436736ef32ddca1b3e06094cb6ec5755203b80"
 
 [[package]]
 name = "fnv"
@@ -3339,9 +3411,9 @@ dependencies = [
 
 [[package]]
 name = "monerochan"
-version = "5.2.8"
+version = "5.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "04759df89f32d46a9fcdc043cc321632ddf54eee07838137ebda583b959786eb"
+checksum = "000e593c2c8f720efe1467838f446c1f9ea879d58fe73dd028fcc7e1b8337e96"
 dependencies = [
  "alloy-primitives",
  "alloy-signer",
@@ -3354,8 +3426,10 @@ dependencies = [
  "aws-sdk-kms",
  "backoff",
  "bincode",
+ "bs58",
  "cfg-if",
  "dirs",
+ "ed25519-dalek",
  "eventsource-stream",
  "futures",
  "hashbrown 0.14.5",
@@ -3379,6 +3453,7 @@ dependencies = [
  "rustls 0.23.28",
  "serde",
  "serde_json",
+ "sha2",
  "strum",
  "strum_macros",
  "sysinfo",
@@ -3386,15 +3461,17 @@ dependencies = [
  "thiserror 1.0.69",
  "tokio",
  "tonic",
+ "tonic-build",
  "tracing",
  "twirp-rs",
+ "uuid",
 ]
 
 [[package]]
 name = "monerochan-build"
-version = "5.2.8"
+version = "5.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e911c4beac4d3201a7a2860cbc7ebb9b1f0f5e7dd89fd012545501af4ab17916"
+checksum = "52834cc87b6d6bc0d9c198aac39c04dc6977ca962e7243ddb74e90112da5026b"
 dependencies = [
  "anyhow",
  "cargo_metadata",
@@ -3406,9 +3483,9 @@ dependencies = [
 
 [[package]]
 name = "monerochan-core-executor"
-version = "5.2.8"
+version = "5.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b1605bf4527d8a1ee19ac608d98fbc122d8a9cc827b391b554f28ce4361534fb"
+checksum = "bde4cca7f7f87ccc55adcdb714d04ffeeae298c4f17982f41964cfe993085446"
 dependencies = [
  "bincode",
  "bytemuck",
@@ -3445,9 +3522,9 @@ dependencies = [
 
 [[package]]
 name = "monerochan-core-machine"
-version = "5.2.8"
+version = "5.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "aefb8495dad1a97bb1837212fbf3d3f552dc2ddf8059e926e60ea8a022de0569"
+checksum = "11060c48b521f7d4d88d6cc56894ebf135e179afa77ccb47834fedc15ea58471"
 dependencies = [
  "bincode",
  "cbindgen",
@@ -3501,9 +3578,9 @@ dependencies = [
 
 [[package]]
 name = "monerochan-cuda"
-version = "5.2.8"
+version = "5.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6c0a8bdba80ab37440a7b88db1a147cab39a7b5a35adf68610b75c59d031793a"
+checksum = "5e2468284c739f27757d3fa79327dc3052e709b7b4e334ad288a5b23b6b6bc00"
 dependencies = [
  "bincode",
  "ctrlc",
@@ -3518,9 +3595,9 @@ dependencies = [
 
 [[package]]
 name = "monerochan-curves"
-version = "5.2.8"
+version = "5.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "293999fbb7284cfaf42121ed31a6f33c6ad5b8e4165272dfdade26cbf47c777c"
+checksum = "0b8ce02da80408876ba5649825ca4252cb9644713391f55af740de6deeeb053c"
 dependencies = [
  "cfg-if",
  "dashu",
@@ -3540,9 +3617,9 @@ dependencies = [
 
 [[package]]
 name = "monerochan-derive"
-version = "5.2.8"
+version = "5.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e9016d74df1e4231c6b13556665c7c38e10f2bf3255f2e01219a66f059ff0113"
+checksum = "14b1a7449a813d9c8cdb48852a6ab51c82d4b33ec8f0bb8483fbca697f6b03d2"
 dependencies = [
  "quote",
  "syn 1.0.109",
@@ -3550,9 +3627,9 @@ dependencies = [
 
 [[package]]
 name = "monerochan-lib"
-version = "5.2.8"
+version = "5.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5dd8c51b94edaa042b60fcab9d5280f606df1e087ec59948e0d3f53c5a8cfe7f"
+checksum = "96a8fdc6dd6f1ce6ea1dbf3e77559f36901dfc49f7fb038d75e064832210d34e"
 dependencies = [
  "bincode",
  "monerochan-primitives",
@@ -3561,9 +3638,9 @@ dependencies = [
 
 [[package]]
 name = "monerochan-primitives"
-version = "5.2.8"
+version = "5.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0c200284bebc19222310435779e542d61faeaa2ef344fc5513d4a39ac7c106b1"
+checksum = "a2e88ddd2e3c9f0efbdc863ddda2ed6404a7c3cd835180c14373ecf6bc6b2a53"
 dependencies = [
  "bincode",
  "blake3",
@@ -3581,9 +3658,9 @@ dependencies = [
 
 [[package]]
 name = "monerochan-prover"
-version = "5.2.8"
+version = "5.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dc32a86c4a4c999f18e25ba1c7f95d62fd4a9aaaf20103c05b94c040dc3264ae"
+checksum = "b78ec0d22715d37267a1d8a58537228bfd9287fe1fca72f47240c324f5f01f0d"
 dependencies = [
  "anyhow",
  "bincode",
@@ -3626,9 +3703,9 @@ dependencies = [
 
 [[package]]
 name = "monerochan-recursion-circuit"
-version = "5.2.8"
+version = "5.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4fc56f3809534fa3eb4bd3a49e12e85a07b9c13432cb2001a361506558ee242b"
+checksum = "2cdbd2853ba1b72e25864d6d78004ad5d4075af8c3bfe64504e37bbc043b0fbe"
 dependencies = [
  "hashbrown 0.14.5",
  "itertools 0.13.0",
@@ -3661,9 +3738,9 @@ dependencies = [
 
 [[package]]
 name = "monerochan-recursion-compiler"
-version = "5.2.8"
+version = "5.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "afa63edb59fec8289141cdeb890079d885e3c819d5d9e970e01d7d370aa39d0c"
+checksum = "8606552149372310dd1759e292c54180de17abe31deccd77404f6ae32829d625"
 dependencies = [
  "backtrace",
  "itertools 0.13.0",
@@ -3683,9 +3760,9 @@ dependencies = [
 
 [[package]]
 name = "monerochan-recursion-core"
-version = "5.2.8"
+version = "5.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "184e648adf456ff9e33935e34eab8238f34af162bf780ae4dddf5400c5ba05ba"
+checksum = "b8690fb4086cdddfb8f29413edc079943b9cffeb691be5dd685c82a6ab9994e2"
 dependencies = [
  "backtrace",
  "cbindgen",
@@ -3726,9 +3803,9 @@ dependencies = [
 
 [[package]]
 name = "monerochan-recursion-derive"
-version = "5.2.8"
+version = "5.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a4b567aa433224019562d3479fdffe548b522034a65e158f1f62e0d3121aac1a"
+checksum = "67540530f87a94fdbd440a74369a5643271eb8e6119a329e2303b5c949e0d59a"
 dependencies = [
  "quote",
  "syn 1.0.109",
@@ -3736,9 +3813,9 @@ dependencies = [
 
 [[package]]
 name = "monerochan-recursion-gnark-ffi"
-version = "5.2.8"
+version = "5.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "df2af162f6493d1017d7ddb446355c2a3b2bfebc533eea4fe601bd2340bf5e23"
+checksum = "5d5d17f9afdb3587aca6732b86c5b7e8002226bad73db472653618d24eebb3e3"
 dependencies = [
  "anyhow",
  "bincode",
@@ -3762,9 +3839,9 @@ dependencies = [
 
 [[package]]
 name = "monerochan-runtime"
-version = "5.2.8"
+version = "5.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4806acea3747085a09e71af2bd7592a5effe562ca7466a030fec558cf55bd185"
+checksum = "1ad631837a923bc1aeb4f549d3ea7320839f2ad50422ce53656a6b8b473c20d4"
 dependencies = [
  "cfg-if",
  "getrandom 0.2.15",
@@ -3779,9 +3856,9 @@ dependencies = [
 
 [[package]]
 name = "monerochan-stark"
-version = "5.2.8"
+version = "5.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "52fc4607f2af046b77a515cf95442c67b6f54c4ea6ce1fc597739b00415510b6"
+checksum = "8c4b489d538fad9d3b20f8ee91eb5d45893b4e31bcc4c377e7edfd94a93eeeef"
 dependencies = [
  "arrayref",
  "hashbrown 0.14.5",
@@ -3810,6 +3887,12 @@ dependencies = [
  "sysinfo",
  "tracing",
 ]
+
+[[package]]
+name = "multimap"
+version = "0.10.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1d87ecb2933e8aeadb3e3a02b828fed80a7528047e68b4f424523a0981a3a084"
 
 [[package]]
 name = "nix"
@@ -4435,6 +4518,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "petgraph"
+version = "0.6.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b4c5cc86750666a3ed20bdaf5ca2a0344f9c67674cae0515bec2da16fbaa47db"
+dependencies = [
+ "fixedbitset",
+ "indexmap 2.8.0",
+]
+
+[[package]]
 name = "pin-project"
 version = "1.1.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4608,6 +4701,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "prost-build"
+version = "0.13.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "be769465445e8c1474e9c5dac2018218498557af32d9ed057325ec9a41ae81bf"
+dependencies = [
+ "heck 0.5.0",
+ "itertools 0.14.0",
+ "log",
+ "multimap",
+ "once_cell",
+ "petgraph",
+ "prettyplease",
+ "prost",
+ "prost-types",
+ "regex",
+ "syn 2.0.100",
+ "tempfile",
+]
+
+[[package]]
 name = "prost-derive"
 version = "0.13.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4618,6 +4731,15 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 2.0.100",
+]
+
+[[package]]
+name = "prost-types"
+version = "0.13.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "52c2c1bf36ddb1a1c396b3601a3cec27c2462e45f07c386894ec3ccf5332bd16"
+dependencies = [
+ "prost",
 ]
 
 [[package]]
@@ -6071,6 +6193,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "tonic-build"
+version = "0.12.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9557ce109ea773b399c9b9e5dca39294110b74f1f342cb347a80d1fce8c26a11"
+dependencies = [
+ "prettyplease",
+ "proc-macro2",
+ "prost-build",
+ "prost-types",
+ "quote",
+ "syn 2.0.100",
+]
+
+[[package]]
 name = "tower"
 version = "0.4.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6328,6 +6464,7 @@ version = "1.18.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2f87b8aa10b915a06587d0dec516c282ff295b475d94abf425d62b57710070a2"
 dependencies = [
+ "getrandom 0.3.3",
  "js-sys",
  "wasm-bindgen",
 ]

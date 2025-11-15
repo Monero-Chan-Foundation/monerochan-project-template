@@ -17,7 +17,7 @@ name = "vkey"
 path = "src/bin/vkey.rs"
 
 [dependencies]
-monerochan = "5.0.8"
+monerochan = { version = "5.2.9", features = ["network"] }
 serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
 serde = { version = "1.0.200", default-features = false, features = ["derive"] }
 clap = { version = "4.0", features = ["derive", "env"] }
@@ -28,4 +28,4 @@ fibonacci-lib = { path = "../lib" }
 dotenv = "0.15.0"
 
 [build-dependencies]
-monerochan-build = "5.0.8"
+monerochan-build = "5.2.9"

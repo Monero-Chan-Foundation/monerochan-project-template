@@ -5,5 +5,5 @@ edition = "2021"
 
 [dependencies]
 alloy-sol-types = { workspace = true }
-monerochan-runtime = "5.0.8"
+monerochan-runtime = "5.2.9"
 fibonacci-lib = { path = "../lib" }

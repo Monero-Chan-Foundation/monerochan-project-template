@@ -14,7 +14,7 @@ struct Args {
     #[arg(long)]
     prove: bool,
 
-    #[arg(long, default_value = "20")]
+    #[arg(long, default_value = "10")]
     n: u32,
 }
 
@@ -28,6 +28,10 @@ fn main() {
         eprintln!("Error: You must specify either --execute or --prove");
         std::process::exit(1);
     }
+
+    // Check which prover mode is being used
+    let prover_mode = std::env::var("MONEROCHAN_PROVER").unwrap_or_else(|_| "cpu".to_string());
+    eprintln!("Using prover mode: {}", prover_mode);
 
     let client = ProverClient::from_env();
 
