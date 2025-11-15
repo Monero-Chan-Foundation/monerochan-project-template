@@ -32,6 +32,16 @@ fn main() {
     // Check which prover mode is being used
     let prover_mode = std::env::var("MONEROCHAN_PROVER").unwrap_or_else(|_| "cpu".to_string());
     eprintln!("Using prover mode: {}", prover_mode);
+    
+    // Check for network authentication when using network prover
+    if prover_mode == "network" {
+        if std::env::var("MONEROCHAN_NETWORK_PRIVATE_KEY").is_err() {
+            eprintln!("Warning: MONEROCHAN_NETWORK_PRIVATE_KEY not set. Network proving may fail for non-exempt clients.");
+            eprintln!("Set MONEROCHAN_NETWORK_PRIVATE_KEY to your Solana private key (hex or base58) for authentication.");
+        } else {
+            eprintln!("Network authentication: MONEROCHAN_NETWORK_PRIVATE_KEY is set");
+        }
+    }
 
     let client = ProverClient::from_env();
 
