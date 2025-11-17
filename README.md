@@ -35,6 +35,22 @@ cd script
 cargo run --release -- --prove
 ```
 
+### Generate a Proof Asynchronously (Network)
+
+To generate a proof asynchronously using the network prover with `request_async()` + `wait_proof()` pattern:
+
+```sh
+cd script
+export MONEROCHAN_PROVER=network
+cargo run --release -- --async-prove
+```
+
+You can also specify the network mode explicitly:
+
+```sh
+cargo run --release -- --async-prove --network-mode reserved
+```
+
 ### Retrieve the Verification Key
 
 To retrieve your `programVKey`, run the following command in `script`:
@@ -77,7 +93,7 @@ When using the network prover (`MONEROCHAN_PROVER=network`), client authenticati
 
 ### Usage
 
-The SDK automatically handles authentication when `MONEROCHAN_NETWORK_PRIVATE_KEY` is set:
+The SDK automatically handles authentication when `MONEROCHAN_NETWORK_PRIVATE_KEY` or `BASE_PRIVATE_KEY` is set:
 
 ```sh
 export MONEROCHAN_NETWORK_PRIVATE_KEY="0x..."
@@ -85,6 +101,29 @@ export MONEROCHAN_PROVER=network
 cd script
 cargo run --release -- --prove
 ```
+
+Alternatively, you can use `BASE_PRIVATE_KEY`:
+
+```sh
+export BASE_PRIVATE_KEY="0x..."
+export MONEROCHAN_PROVER=network
+cd script
+cargo run --release -- --prove
+```
+
+### Explicit Network Mode Selection
+
+You can explicitly specify the network mode using the `--network-mode` flag:
+
+```sh
+# Use Reserved capacity network
+cargo run --release -- --prove --network-mode reserved
+
+# Use Mainnet
+cargo run --release -- --prove --network-mode mainnet
+```
+
+This uses the `network_for(NetworkMode)` API for explicit mode selection.
 
 Authentication includes:
 - Ed25519 signature verification
@@ -109,3 +148,16 @@ export MONEROCHAN_PROVER=network
 cd script
 cargo run --release -- --prove --n 10
 ```
+
+### Async Network Proving Workflow
+
+For async proof generation using `request_async()` and `wait_proof()`:
+
+```sh
+export MONEROCHAN_NETWORK_PRIVATE_KEY="0x..."
+export MONEROCHAN_PROVER=network
+cd script
+cargo run --release -- --async-prove --n 10
+```
+
+This pattern submits a proof request and then waits for completion, useful for long-running proofs or when you need to track request IDs.

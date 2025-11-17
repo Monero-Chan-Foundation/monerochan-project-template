@@ -1,6 +1,8 @@
 #!/bin/bash
 # Generate Solana keypair for network authentication
 # This script generates a private key and derives the Solana address
+# Note: The generated key can be used with either MONEROCHAN_NETWORK_PRIVATE_KEY
+# or BASE_PRIVATE_KEY environment variable (BASE_PRIVATE_KEY is supported for compatibility)
 
 set -e
 
@@ -110,14 +112,18 @@ export MONEROCHAN_PROVER=cpu
 
 # Network Authentication (Release 1)
 # Generate your keypair with: ./scripts/generate_solana_keypair.sh
+# You can use either MONEROCHAN_NETWORK_PRIVATE_KEY or BASE_PRIVATE_KEY
 export MONEROCHAN_NETWORK_PRIVATE_KEY="0x..."
+# Alternative: export BASE_PRIVATE_KEY="0x..."
 EOF
 elif ! grep -q "^export MONEROCHAN_NETWORK_PRIVATE_KEY=" "$ENV_EXAMPLE" 2>/dev/null; then
     # Add Network Authentication section if it doesn't exist
     echo "" >> "$ENV_EXAMPLE"
     echo "# Network Authentication (Release 1)" >> "$ENV_EXAMPLE"
     echo "# Generate your keypair with: ./scripts/generate_solana_keypair.sh" >> "$ENV_EXAMPLE"
+    echo "# You can use either MONEROCHAN_NETWORK_PRIVATE_KEY or BASE_PRIVATE_KEY" >> "$ENV_EXAMPLE"
     echo "export MONEROCHAN_NETWORK_PRIVATE_KEY=\"0x...\"" >> "$ENV_EXAMPLE"
+    echo "# Alternative: export BASE_PRIVATE_KEY=\"0x...\"" >> "$ENV_EXAMPLE"
 fi
 
 # Ensure MONEROCHAN_PROVER is in .env.example
